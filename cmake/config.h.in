@@ -103,4 +103,6 @@
 /* define if reverse_graph requires patch for boost 1.62.0 */
 #cmakedefine BOOST_REVGRAPH_PATCH
 
+#define NATIVE_WIN32 ((defined(_WIN32) || defined(_WIN64)) && !defined(__MINGW__) && !defined(__MINGW32__))
+
 #endif /* CONFIG_H_ */

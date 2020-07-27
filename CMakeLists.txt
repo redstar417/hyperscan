@@ -280,6 +280,11 @@ else()
     endif ()
 endif()
 
+if (MINGW)
+    set(EXTRA_C_FLAGS "${EXTRA_C_FLAGS} -posix")
+    set(EXTRA_CXX_FLAGS "${EXTRA_CXX_FLAGS} -posix")
+endif()
+
 CHECK_INCLUDE_FILES(unistd.h HAVE_UNISTD_H)
 CHECK_INCLUDE_FILES(intrin.h HAVE_C_INTRIN_H)
 CHECK_INCLUDE_FILE_CXX(intrin.h HAVE_CXX_INTRIN_H)
@@ -336,7 +341,7 @@ CHECK_C_SOURCE_COMPILES("void *aa_test(void *x) { return __builtin_assume_aligne
 CHECK_CXX_SOURCE_COMPILES("void *aa_test(void *x) { return __builtin_assume_aligned(x, 16);}\nint main(void) { return 0; }" HAVE_CXX_BUILTIN_ASSUME_ALIGNED)
 CHECK_C_SOURCE_COMPILES("int main(void) { __builtin_constant_p(0); }" HAVE__BUILTIN_CONSTANT_P)
 
-if (NOT WIN32)
+if (MINGW OR NOT WIN32)
 set(C_FLAGS_TO_CHECK
 # Variable length arrays are way bad, most especially at run time
 "-Wvla"
@@ -436,7 +441,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
     set(FREEBSD true)
 endif(CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
 
-if(NOT WIN32)
+if(MINGW OR NOT WIN32)
 if(CMAKE_C_COMPILER_ID MATCHES "Intel")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -diag-error 10006 -diag-disable 68 -diag-disable 177 -diag-disable 186 -diag-disable 2304 -diag-disable 2305 -diag-disable 2338 -diag-disable 1418 -diag-disable 279 -diag-disable=remark")
 endif()
@@ -487,7 +492,7 @@ endif()
 configure_file(${CMAKE_MODULE_PATH}/config.h.in ${PROJECT_BINARY_DIR}/config.h)
 configure_file(src/hs_version.h.in ${PROJECT_BINARY_DIR}/hs_version.h)
 
-if (NOT WIN32)
+if (MINGW OR NOT WIN32)
     # expand out library names for pkgconfig static link info
     foreach (LIB ${CMAKE_CXX_IMPLICIT_LINK_LIBRARIES})
         # this is fragile, but protects us from toolchain specific files
@@ -535,7 +540,7 @@ if (EXISTS ${CMAKE_SOURCE_DIR}/chimera/CMakeLists.txt AND BUILD_CHIMERA)
 endif()
 endif()
 
-if(NOT WIN32)
+if(MINGW OR NOT WIN32)
 set(RAGEL_C_FLAGS "-Wno-unused")
 endif()
 
@@ -1381,6 +1386,6 @@ if (NOT BUILD_STATIC_LIBS)
 endif ()
 
 
-if(NOT WIN32)
+if(MINGW OR NOT WIN32)
     add_subdirectory(examples)
 endif()

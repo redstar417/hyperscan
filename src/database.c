@@ -352,7 +352,7 @@ hs_error_t dbIsValid(const hs_database_t *db) {
     return HS_SUCCESS;
 }
 
-#if defined(_WIN32)
+#if NATIVE_WIN32
 #define SNPRINTF_COMPAT _snprintf
 #else
 #define SNPRINTF_COMPAT snprintf
