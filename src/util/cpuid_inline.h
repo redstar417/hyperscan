@@ -94,7 +94,7 @@ void cpuid(unsigned int op, unsigned int leaf, unsigned int *eax,
 
 static inline
 u64a xgetbv(u32 op) {
-#if defined(_WIN32) || defined(__INTEL_COMPILER)
+#if NATIVE_WIN32 || defined(__INTEL_COMPILER)
     return _xgetbv(op);
 #else
     u32 a, d;

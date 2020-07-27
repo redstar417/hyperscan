@@ -66,7 +66,7 @@
  */
 #if defined(__POPCNT__) ||                                                     \
     (defined(__INTEL_COMPILER) && defined(__SSE4_2__)) ||                      \
-    (defined(_WIN32) && defined(__AVX__))
+    (NATIVE_WIN32 && defined(__AVX__))
 #define HAVE_POPCOUNT_INSTR
 #endif
 
